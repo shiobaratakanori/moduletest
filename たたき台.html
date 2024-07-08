@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>インタラクティブな選択システム</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+  }
+  .main-container {
+    display: flex;
+    width: 100%;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+  }
+  .left-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .right-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 20px;
+  }
+  .box-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    width: 80%;
+  }
+  .box {
+    width: 20%;
+    height: 80%;
+    border: 2px solid black;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 2em;
+    box-sizing: border-box;
+  }
+  .red { border-color: red; }
+  .blue { border-color: blue; }
+  .purple { border-color: purple; }
+  .selection-panel {
+    display: none;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  .selection-panel div {
+    cursor: pointer;
+    margin: 5px 0;
+    font-size: 1.5em;
+  }
+  #code-display {
+    margin-top: 20px;
+    font-size: 2em;
+  }
+</style>
+</head>
+<body>
+
+<div class="main-container">
+  <div class="left-container">
+    <div class="box-container">
+      <div id="box1" class="box red" onclick="showPanel(1)">1</div>
+      <div id="box2" class="box blue" onclick="showPanel(2)">2</div>
+      <div id="box3" class="box purple" onclick="showPanel(3)">3</div>
+    </div>
+    <div id="code-display">ZZ-□□□□□</div>
+  </div>
+  <div class="right-container">
+    <div id="panel1" class="selection-panel">
+      <div onclick="selectOption(1, 'モールドジスコン', 'DM400')">モールドジスコン (DM400)</div>
+      <div onclick="selectOption(1, 'UGS', 'SH304')">UGS (SH304)</div>
+    </div>
+
+    <div id="panel2" class="selection-panel">
+      <div onclick="selectOption(2, 'モールドジスコン', 'DM400')">モールドジスコン (DM400)</div>
+      <div onclick="selectOption(2, 'UGS', 'SH304')">UGS (SH304)</div>
+    </div>
+
+    <div id="panel3" class="selection-panel">
+      <div onclick="selectOption(3, 'モールドジスコン', 'DM400')">モールドジスコン (DM400)</div>
+      <div onclick="selectOption(3, 'UGS', 'SH304')">UGS (SH304)</div>
+      <div onclick="selectOption(3, 'UAS', 'SB089')">UAS (SB089)</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let selectedCodes = ['', '', ''];
+
+  function showPanel(boxNumber) {
+    document.querySelectorAll('.selection-panel').forEach(panel => panel.style.display = 'none');
+    document.getElementById(`panel${boxNumber}`).style.display = 'flex';
+  }
+
+  function selectOption(boxNumber, name, code) {
+    document.getElementById(`box${boxNumber}`).textContent = name;
+    selectedCodes[boxNumber - 1] = code;
+    updateCodeDisplay();
+  }
+
+  function updateCodeDisplay() {
+    const codeDisplay = document.getElementById('code-display');
+    codeDisplay.textContent = `ZZ-${selectedCodes.join('')}`;
+  }
+</script>
+
+</body>
+</html>
